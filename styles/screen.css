@@ -40,3 +40,13 @@ body {
     font-weight: 700;
     font-size: 5em;
 }
+
+.local {
+    text-align: start;
+    margin: 5px;
+    margin-left: 25px;
+}
+
+.openweathermap {
+    align-items: end;
+}
