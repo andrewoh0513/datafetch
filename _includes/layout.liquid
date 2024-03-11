@@ -1,5 +1,5 @@
 ---
-title: 11ty Boilerplate
+title: Weather Forecast
 ---
 
 <!DOCTYPE html>
@@ -9,14 +9,43 @@ title: 11ty Boilerplate
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{{ title }}</title>
   <link rel="stylesheet" href="/styles/screen.css">
+  <script defer src="https://cdn.jsdelivr.net/gh/hankhank10/alpine-fetch@main/alpine-fetch.js"></script>
+  <script src="//unpkg.com/alpinejs" defer></script>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-  <nav>
-    <ul>
-      <li><a href="/" title="Go home">Home</a></li>
-      <li><a href="/about/" title="About the boilerplate">About</a></li>
-    </ul>
-  </nav>
-    {{ content }}
+  <div class="card">
+    <div class="search">
+      <input type="text" placeholder="enter city name">
+      <button><img src="images/searchicon.png"></button>
+    </div>
+    <div class="weather">
+        <h1 class="temp">999&deg;C</h1>
+        <h2 class="city">Lansing</h2>
+    </div>
+  </div>
+<script>
+
+    const apiKey = "37f12f5e96b4c900e2b34d22d2627f57";
+    const apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=imperial&q="
+
+    const searchBox = document.querySelector(".search input")
+    const searchBtn = document.querySelector(".search button")
+
+    async function checkWeather(city){
+        const response = await fetch(apiUrl + city + `&appid=${apiKey}`);
+        var data = await response.json();
+
+        console.log(data);
+
+        document.querySelector(".city").innerHTML = data.name
+        document.querySelector(".temp").innerHTML = Math.round(data.main.temp) + "&deg;F";
+    }
+
+  searchBtn.addEventListener("click", () => {
+    checkWeather(searchBox.value);
+  })
+
+</script>
 </body>
 </html>
